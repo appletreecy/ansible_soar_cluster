@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: update YUM Repository index
+    yum:
+      update_cache: yes
+
+- hosts: master_servers
+  become: true
+  roles:
+    - master_servers
