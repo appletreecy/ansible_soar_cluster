@@ -1,0 +1,15 @@
+- name: Update package using YUM
+  yum:
+    name: '*'
+    state: latest 
+
+- name: Install nfs-utils package
+  yum:
+    name: nfs-utils
+    state: present
+
+- name: Create directory /mnt/external
+  file:
+    path: /mnt/external
+    state: directory
+    mode: '0755'
