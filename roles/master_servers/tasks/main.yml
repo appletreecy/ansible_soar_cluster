@@ -27,3 +27,26 @@
     --echo-all
     --command "GRANT rds_superuser TO pgbouncer;"
   ignore_errors: yes
+
+- name: Mount NFS Share
+  command: >
+    mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 10.0.1.98:/ /mnt/external
+  ignore_errors: yes
+
+- name: Backup apps directory
+  command: rsync -avz /opt/phantom/apps /mnt/external/
+  
+- name: Backup app_states directory
+  command: rsync -avz /opt/phantom/local_data/app_states /mnt/external/
+  
+- name: Backup scm directory
+  command: rsync -avz /opt/phantom/scm /mnt/external/
+  
+- name: Backup shared directory
+  command: rsync -avz /opt/phantom/tmp/shared /mnt/external/
+  
+- name: Backup vault directory
+  command: rsync -avz /opt/phantom/vault /mnt/external/
+
+- name: Unmount /mnt/external
+  command: umount /mnt/external

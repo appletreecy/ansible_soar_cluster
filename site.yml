@@ -11,3 +11,8 @@
   become: true
   roles:
     - master_servers
+
+- hosts: soar_servers
+  become: true
+  roles:
+    - soar_servers
