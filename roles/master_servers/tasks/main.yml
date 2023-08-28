@@ -13,3 +13,17 @@
     path: /mnt/external
     state: directory
     mode: '0755'
+
+- name: Run the psql command to CREATE ROLE
+  command: >
+    /opt/phantom/bin/phenv psql postgresql://postgres:splunk3du@terraform-20230828030846935400000003.cxab3r5epwgv.us-east-1.rds.amazonaws.com:5432/phantom
+    --echo-all
+    --command "CREATE ROLE pgbouncer WITH PASSWORD 'splunk3du' login;"
+  ignore_errors: yes
+
+- name: Run the psql command to Grant  ROLE superuser
+  command: >
+    /opt/phantom/bin/phenv psql postgresql://postgres:splunk3du@terraform-20230828030846935400000003.cxab3r5epwgv.us-east-1.rds.amazonaws.com:5432/phantom
+    --echo-all
+    --command "GRANT rds_superuser TO pgbouncer;"
+  ignore_errors: yes
