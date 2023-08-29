@@ -37,3 +37,16 @@
       10.0.1.98:/scm /opt/phantom/scm nfs4 defaults,_netdev 0 0
       10.0.1.98:/shared /opt/phantom/tmp/shared nfs4 defaults,_netdev 0 0
       10.0.1.98:/vault /opt/phantom/vault nfs4 defaults,_netdev 0 0
+
+- name: copy response.json to soar servers
+  copy:
+    src: response.json
+    dest: /opt/phantom/bin/response.json
+    owner: phantom
+    group: phantom
+    mode: 0644
+
+- name: Run Phantom Command
+  command: "/opt/phantom/bin/phenv python /opt/phantom/bin/make_cluster_node.pyc --responses /opt/phantom/bin/response.json"
+  become: true
+  become_user: phantom

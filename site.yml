@@ -12,7 +12,13 @@
   roles:
     - master_servers
 
+- hosts: splunk_servers
+  become: true
+  roles:
+    - splunk_servers
+
 - hosts: soar_servers
   become: true
   roles:
     - soar_servers
+
