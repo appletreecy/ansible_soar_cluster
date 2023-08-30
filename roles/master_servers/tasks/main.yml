@@ -16,14 +16,19 @@
 
 - name: Run the psql command to CREATE ROLE
   command: >
-    /opt/phantom/bin/phenv psql postgresql://postgres:splunk3du@terraform-20230829010559018600000004.cxab3r5epwgv.us-east-1.rds.amazonaws.com:5432/phantom
+    /opt/phantom/bin/phenv psql postgresql://postgres:splunk3du@terraform-20230830035712746900000001.cxab3r5epwgv.us-east-1.rds.amazonaws.com:5432/phantom
     --echo-all
     --command "CREATE ROLE pgbouncer WITH PASSWORD 'splunk3du' login;"
   ignore_errors: yes
+  when: is_run_sql_create_role is not defined
+
+- name: Set fact is_run_sql_create_role
+  set_fact:
+    is_run_sql_create_role: true
 
 - name: Run the psql command to Grant  ROLE superuser
   command: >
-    /opt/phantom/bin/phenv psql postgresql://postgres:splunk3du@terraform-20230829010559018600000004.cxab3r5epwgv.us-east-1.rds.amazonaws.com:5432/phantom
+    /opt/phantom/bin/phenv psql postgresql://postgres:splunk3du@terraform-20230830035712746900000001.cxab3r5epwgv.us-east-1.rds.amazonaws.com:5432/phantom
     --echo-all
     --command "GRANT rds_superuser TO pgbouncer;"
   ignore_errors: yes

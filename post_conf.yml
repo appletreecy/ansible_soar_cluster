@@ -1,0 +1,6 @@
+---
+- hosts: soar_servers_after
+  become: true
+  roles:
+    - soar_servers_after
+

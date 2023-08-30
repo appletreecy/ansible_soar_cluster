@@ -1,2 +1,7 @@
 - name: Run Phantom Command to convert soar server to splunk server
   command: "/opt/phantom/bin/phenv python /opt/phantom/bin/make_server_node.pyc splunk --no-prompt"
+  when: is_run_convert_to_splunk is not defined
+
+- name: Set fact is_run_convert_to_splunk
+  set_fact:
+    is_run_convert_to_splunk: true
