@@ -1,0 +1,13 @@
+- name: copy response.json to soar servers
+  copy:
+    src: response.json
+    dest: /opt/phantom/bin/response.json
+    owner: phantom
+    group: phantom
+    mode: 0644
+
+- name: Run Phantom convert cluster Command
+  command: "/opt/phantom/bin/phenv python /opt/phantom/bin/make_cluster_node.pyc --responses /opt/phantom/bin/response.json"
+  become: true
+  become_user: phantom
+

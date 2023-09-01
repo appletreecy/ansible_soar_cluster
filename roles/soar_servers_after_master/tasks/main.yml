@@ -1,0 +1,18 @@
+- name: Run scp command to copy back thre splunk_config.json from Splunk server
+  ansible.builtin.command: >
+    scp -i /home/phantom/.ssh/2023-0804.pem phantom@10.0.1.54:/opt/phantom/bin/splunk_config.json .
+  become: true
+  become_user: phantom
+
+- name: Copy response.json file using cp command
+  ansible.builtin.command: cp /home/phantom/ansible_soar_cluster/roles/soar_servers_after/files/response.json .
+  become: true
+  become_user: phantom
+
+- name: Copy scao_convert.py file using cp command
+  ansible.builtin.command: cp /home/phantom/ansible_soar_cluster/scao_convert.py .
+  become: true
+  become_user: phantom
+
+- name: Run Python script
+  command: "python scao_convert.py"
