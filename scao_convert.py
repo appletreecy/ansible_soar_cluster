@@ -2,9 +2,13 @@ import json
 import os
 
 
-with open('1.json', 'r') as scao_file1:
+with open('1.conf', 'r') as scao_file1:
     # Read the first line
-    first_line = scao_file1.readline().strip()
+    rds_hostname = scao_file1.readline().strip()
+
+with open('2.conf', 'r') as scao_file2:
+    # Read the first line
+    lb_dns_address = scao_file2.readline().strip()
 
 # Access the value of an environment variable
 env_rds_address = os.environ.get('MY_VAR')
@@ -23,8 +27,8 @@ with open('response.json', 'r') as second_file:
     second_data['splunk_search_password'] = new_password
     second_data['splunk_delete_password'] = new_password1
     second_data['splunk_event_collector_token'] = new_token
-    second_data['external_db_location'] = first_line
-    second_data['haproxy_server'] = env_lb_address
+    second_data['external_db_location'] = rds_hostname
+    second_data['haproxy_server'] = lb_dns_address
 
 
 
