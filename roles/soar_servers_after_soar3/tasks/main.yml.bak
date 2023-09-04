@@ -1,0 +1,52 @@
+- name: Update package using YUM
+  yum:
+    name: '*'
+    state: latest 
+
+- name: Install nfs-utils package
+  yum:
+    name: nfs-utils
+    state: present
+
+- name: Mount /opt/phantom/apps
+  command: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 10.0.1.98:/apps /opt/phantom/apps
+  ignore_errors: yes
+
+- name: Mount /opt/phantom/local_data/app_states
+  command: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 10.0.1.98:/app_states /opt/phantom/local_data/app_states
+  ignore_errors: yes
+
+- name: Mount /opt/phantom/scm
+  command: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 10.0.1.98:/scm /opt/phantom/scm
+  ignore_errors: yes
+
+- name: Mount /opt/phantom/tmp/shared
+  command: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 10.0.1.98:/shared /opt/phantom/tmp/shared
+  ignore_errors: yes
+
+- name: Mount /opt/phantom/vault
+  command: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 10.0.1.98:/vault /opt/phantom/vault
+  ignore_errors: yes
+
+- name: Add NFS mounts to /etc/fstab
+  blockinfile:
+    path: /etc/fstab
+    block: |
+      10.0.1.98:/apps /opt/phantom/apps nfs4 defaults,_netdev 0 0
+      10.0.1.98:/app_states /opt/phantom/local_data/app_states nfs4 defaults,_netdev 0 0
+      10.0.1.98:/scm /opt/phantom/scm nfs4 defaults,_netdev 0 0
+      10.0.1.98:/shared /opt/phantom/tmp/shared nfs4 defaults,_netdev 0 0
+      10.0.1.98:/vault /opt/phantom/vault nfs4 defaults,_netdev 0 0
+
+- name: copy response.json to soar servers
+  copy:
+    src: response.json
+    dest: /opt/phantom/bin/response.json
+    owner: phantom
+    group: phantom
+    mode: 0644
+
+- name: Run Phantom Command
+  command: "/opt/phantom/bin/phenv python /opt/phantom/bin/make_cluster_node.pyc --responses /opt/phantom/bin/response.json"
+  become: true
+  become_user: phantom

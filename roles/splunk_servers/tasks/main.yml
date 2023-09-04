@@ -5,3 +5,6 @@
 - name: Set fact is_run_convert_to_splunk
   set_fact:
     is_run_convert_to_splunk: true
+
+- name: Change the owner of the file /opt/phantom/bin/splunk_config.json
+  command: "chown phantom:phantom /opt/phantom/bin/splunk_config.json"

@@ -16,3 +16,12 @@
 
 - name: Run Python script
   command: "python scao_convert.py"
+
+- name: copy response.json to 10.0.1.51
+  command: "scp -i /home/phantom/.ssh/2023-0804.pem /home/phantom/response.json phantom@10.0.1.51:/opt/phantom/bin/"
+
+- name: copy response.json to 10.0.1.52
+  command: "scp -i /home/phantom/.ssh/2023-0804.pem /home/phantom/response.json phantom@10.0.1.52:/opt/phantom/bin/"
+
+- name: copy response.json to 10.0.1.53
+  command: "scp -i /home/phantom/.ssh/2023-0804.pem /home/phantom/response.json phantom@10.0.1.53:/opt/phantom/bin/"

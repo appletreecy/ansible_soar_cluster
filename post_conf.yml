@@ -3,3 +3,15 @@
   roles:
     - soar_servers_after_master
 
+- hosts: soar_servers_after_soar1
+  roles:
+    - soar_servers_after_soar1
+
+- hosts: soar_servers_after_soar2
+  roles:
+    - soar_servers_after_soar2
+
+- hosts: soar_servers_after_soar3
+  roles:
+    - soar_servers_after_soar3
+

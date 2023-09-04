@@ -1,0 +1,4 @@
+- name: Run script make_cluster_node.pyc
+  command: "/opt/phantom/bin/phenv python /opt/phantom/bin/make_cluster_node.pyc --responses /opt/phantom/bin/response.json"
+
+
